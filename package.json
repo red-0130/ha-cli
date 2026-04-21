@@ -1,0 +1,23 @@
+{
+  "name": "ha-cli",
+  "module": "./src/index.js",
+  "bin": {
+    "ha": "./src/index.js",
+    "toggle": "./src/toggle.js"
+  },
+  "type": "module",
+  "private": true,
+  "devDependencies": {
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  },
+  "dependencies": {
+    "conf": "^15.1.0"
+  },
+  "scripts": {
+    "dev": "bun run ./src/index.js",
+    "build": "bun build ./src/index.js --compile --outfile ./bin/ha"
+  }
+}
