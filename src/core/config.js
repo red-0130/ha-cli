@@ -27,3 +27,7 @@ export function deleteAlias(alias) {
   delete aliases[alias];
   config.set("aliases", aliases);
 }
+
+export function initAliases() {
+  config.set("aliases", {});
+}

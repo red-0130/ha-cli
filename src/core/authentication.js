@@ -1,5 +1,11 @@
 import { getApiStatus } from "@/services/getApiStatus";
-import { getConfig, setBaseUrl, setToken } from "@/core/config";
+import {
+  getConfig,
+  initAliases,
+  setAlias,
+  setBaseUrl,
+  setToken,
+} from "@/core/config";
 
 export function askForToken() {
   return prompt("Access Token:");
@@ -42,6 +48,7 @@ export function authenticate() {
 
     setBaseUrl(baseUrl);
     setToken(inputToken);
+    initAliases();
     return;
   }
 
