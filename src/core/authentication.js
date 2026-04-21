@@ -49,7 +49,7 @@ export function authenticate() {
     setBaseUrl(baseUrl);
     setToken(inputToken);
     initAliases();
-    return;
+    return [false, null];
   }
 
   return [checkServer(config.baseUrl, config.token), config];
