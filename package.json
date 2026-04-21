@@ -18,6 +18,7 @@
   },
   "scripts": {
     "dev": "bun run ./src/index.js",
-    "build": "bun build ./src/index.js --compile --outfile ./bin/ha"
+    "build:ha": "bun build ./src/index.js --compile --outfile ~/.local/bin/ha",
+    "build:toggle": "bun build ./src/toggle.js --compile --outfile ~/.local/bin/toggle"
   }
 }
