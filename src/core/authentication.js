@@ -20,10 +20,10 @@ function askForBaseURL() {
  *
  * @param {String} url - Home Assistant URL
  * @param {String} token - Access token for API
- * @returns {Boolean} Returns `true` if can connect to server
+ * @returns {Promise<Boolean>} Returns `true` if can connect to server
  */
-export function checkServer(url, token) {
-  const response = getApiStatus(url, token);
+export async function checkServer(url, token) {
+  const response = await getApiStatus(url, token);
   const hasError = response[0];
   if (!hasError) {
     return true;
@@ -32,15 +32,10 @@ export function checkServer(url, token) {
 }
 
 /**
- * @typedef {Object} Config
- * @property {String} baseUrl - URL of the server
- * @property {String} token - Access Token to use the API
- */
-/**
  * Check API authentication
  * @returns {Promise<[Boolean, Config]>} Returns status of authentication
  */
-export function authenticate() {
+export async function authenticate() {
   const config = getConfig();
   if (!config.baseUrl || !config.token) {
     const baseUrl = askForBaseURL();
@@ -49,8 +44,12 @@ export function authenticate() {
     setBaseUrl(baseUrl);
     setToken(inputToken);
     initAliases();
-    return [false, null];
+    
+    // Verify only on first setup
+    const isAuthenticated = await checkServer(baseUrl, inputToken);
+    return [isAuthenticated, getConfig()];
   }
 
-  return [checkServer(config.baseUrl, config.token), config];
+  // Skip server check for speed. Services will handle errors if token expired.
+  return [true, config];
 }
